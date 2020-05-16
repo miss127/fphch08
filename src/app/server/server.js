@@ -53,7 +53,7 @@ app.listen(8080, function () {
 app.post('/users', function (req, resp) {
     let founded = false;
     for (let user of USERS) {
-        if (user.userName === req.body.username && user.password === req.body.password) {
+        if (user.userName === req.body.userName && user.password === req.body.password) {
             resp.send({ succ: true });
             founded = true;
         }
