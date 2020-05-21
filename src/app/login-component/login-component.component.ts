@@ -50,8 +50,8 @@ export class LoginComponentComponent implements OnInit {
     this.httpClient.post(this.baseUrl + 'users', this.myForm.value).subscribe((val: any) => {
       if (val.succ) {
         if (this.myForm.valid) {
-          this.router.navigate(['/management']);
           this.authService.login();
+          this.router.navigate(['/management']);
         }
       }
       else {
