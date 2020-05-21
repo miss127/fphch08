@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { FormGroup, AbstractControl, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 function userNameValidator(control: FormControl): { [s: string]: boolean } {
   if (!control.value.match(/^a/)) {
     return { invalidUser: true };
@@ -23,7 +24,7 @@ export class LoginComponentComponent implements OnInit {
 
   name$: Observable<string>;
   baseUrl = 'http://127.0.0.1:8080/';
-  constructor(private authService: AuthService, private fb: FormBuilder, private httpClient: HttpClient) {
+  constructor(private authService: AuthService, private fb: FormBuilder, private httpClient: HttpClient, private router: Router) {
     this.myForm = this.fb.group(
       {
         'userName': ['', Validators.compose([Validators.required, Validators.minLength(5)])],
@@ -49,6 +50,7 @@ export class LoginComponentComponent implements OnInit {
     this.httpClient.post(this.baseUrl + 'users', this.myForm.value).subscribe((val: any) => {
       if (val.succ) {
         if (this.myForm.valid) {
+          this.router.navigate(['/management']);
           this.authService.login();
         }
       }
